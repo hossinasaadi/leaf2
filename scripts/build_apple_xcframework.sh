@@ -24,8 +24,8 @@ rustup default nightly
 # to allow for abi builds from the nightly toolchain for xargo...
 rustup component add rust-src
 
-echo "▸ Install xargo"
-cargo install xargo
+# echo "▸ Install xargo"
+# cargo install xargo
 
 # Build for all desired targets
 rustup target add aarch64-apple-ios
@@ -35,11 +35,11 @@ rustup target add x86_64-apple-ios-macabi
 cargo build -p $package $release_flag --no-default-features --features "default-openssl" --target aarch64-apple-ios
 
 echo "▸ x86_64-apple-ios-macabi"
-xargo build -Zbuild-std -p $package $release_flag --no-default-features --target x86_64-apple-ios-macabi
+cargo build -p $package $release_flag --no-default-features --target x86_64-apple-ios-macabi
 
 echo "▸ aarch64-apple-ios-macabi"
 #xargo build --target aarch64-apple-ios-macabi --package automerge-c --release
-xargo build -Zbuild-std -p $package $release_flag --no-default-features --target aarch64-apple-ios-macabi
+cargo build -p $package $release_flag --no-default-features --target aarch64-apple-ios-macabi
 
 # Directories to put the libraries.
 rm -rf target/apple/$mode
