@@ -141,53 +141,9 @@ jobs:
           name: leaf.xcframework.zip
           path: leaf.xcframework.zip
 
-  build-android:
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
-        with:
-          submodules: true
-
-      - name: install rust
-        uses: hecrj/setup-rust-action@v1
-        with:
-          rust-version: stable
-
-      - name: install toolchain
-        run: |
-          cargo install cbindgen
-          apt update && apt install -y make llvm-dev libclang-dev clang pkg-config unzip curl default-jdk build-essential
-          export ANDROID_HOME=/tmp/Android/sdk
-          export NDK_HOME=/tmp/Android/sdk/ndk/25.2.9519653
-          export PATH=$ANDROID_HOME/cmdline-tools/bin:$PATH
-          cd /tmp/
-          curl -OL https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip
-          unzip commandlinetools-linux-6858069_latest.zip
-          mkdir -p $ANDROID_HOME
-          mv cmdline-tools $ANDROID_HOME
-          yes | sdkmanager --sdk_root=$ANDROID_HOME --licenses
-          sdkmanager --sdk_root=$ANDROID_HOME "ndk;25.2.9519653" "platforms;android-21"
-
-      - name: build
-        run: |
-          export ANDROID_HOME=/tmp/Android/sdk
-          export NDK_HOME=/tmp/Android/sdk/ndk/25.2.9519653
-          ./scripts/build_android.sh
-
-      - name: zip artifacts
-        run: |
-          mv target/leaf-android-libs .
-          zip -r leaf-android-libs.zip leaf-android-libs
-
-      - name: upload assets
-        uses: actions/upload-artifact@v2
-        with:
-          name: leaf-android-libs.zip
-          path: leaf-android-libs.zip
-
+  
   create-release:
-    needs: [build-bin-cross, build-bin-local, build-apple, build-android]
+    needs: [build-bin-cross, build-bin-local, build-apple]
     runs-on: macos-latest
     steps:
       - name: checkout
