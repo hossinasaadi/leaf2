@@ -22,8 +22,8 @@ default-ring = [
     # quinn supports only rustls as tls backend for now
     # "inbound-quic",
     # "outbound-quic",
-    "api",
-    "stat",
+    # "api",
+    # "stat",
     # "plugin",
 ]
 
@@ -54,10 +54,10 @@ all-endpoints = [
     # "inbound-cat",
     # outbounds
     "outbound-direct",
-    "outbound-drop",
+    # "outbound-drop",
     "outbound-redirect",
     "outbound-shadowsocks",
-    "outbound-obfs",
+    # "outbound-obfs",
     "outbound-socks",
     # "outbound-trojan",
     # "outbound-tls",
@@ -65,7 +65,7 @@ all-endpoints = [
     # "outbound-amux",
     # "outbound-vmess",
     # "outbound-quic",
-    "outbound-failover",
+    # "outbound-failover",
     # "outbound-static",
     # "outbound-tryall",
     # "outbound-chain",
@@ -78,7 +78,7 @@ ring-aead = ["ring"]
 
 # Openssl-related, for platforms not supported by ring, such as mips
 openssl-aead = ["openssl"]
-openssl-tls = ["openssl", "tokio-openssl", "openssl-probe"]
+# openssl-tls = ["openssl", "tokio-openssl", "openssl-probe"]
 
 # Config formats
 config-conf = ["regex"]
@@ -86,21 +86,21 @@ config-json = ["serde", "serde_derive", "serde_json"]
 
 # Outbounds
 outbound-direct = []
-outbound-drop = []
+# outbound-drop = []
 outbound-redirect = []
 outbound-shadowsocks = ["hkdf", "sha-1", "md-5", "tokio-util"]
-outbound-obfs = ["base64", "memchr"]
+# outbound-obfs = ["base64", "memchr"]
 outbound-socks = ["async-socks5"]
 # outbound-trojan = ["sha2", "hex"]
 # outbound-tls = []
 # outbound-ws = ["tungstenite", "tokio-tungstenite", "url", "http"]
-outbound-failover = ["lru_time_cache"]
+# outbound-failover = ["lru_time_cache"]
 # outbound-static= []
 # outbound-tryall = []
 # outbound-chain = []
 # outbound-amux= ["tokio-util"]
 # outbound-quic = ["quinn", "rustls", "webpki-roots"]
-outbound-select = []
+# outbound-select = []
 # outbound-vmess = ["lz_fnv", "cfb-mode", "hmac", "aes", "sha3", "digest", "uuid", "md-5", "tokio-util"]
 
 # Inbounds
@@ -117,8 +117,8 @@ inbound-tun = ["tun", "netstack-lwip"]
 inbound-cat = ["tokio/io-std"]
 
 plugin = []
-stat = []
-api = ["warp"]
+# stat = []
+# api = ["warp"]
 auto-reload = ["notify"]
 ctrlc = ["tokio/signal"]
 
@@ -177,7 +177,7 @@ colored = "2.0"
 # rustls-pemfile = { version = "1.0.2", optional = true }
 
 # TLS/openssl
-openssl-probe = { version = "0.1", optional = true }
+# openssl-probe = { version = "0.1", optional = true }
 tokio-openssl = { version = "0.6", optional = true }
 
 # WebSocket
@@ -197,8 +197,8 @@ md-5 = { version = "0.10", optional = true }
 sha-1 = { version = "0.9", optional = true }
 
 # Obfs
-base64 = { version = "0.21", optional = true }
-memchr = { version = "2", optional = true }
+# base64 = { version = "0.21", optional = true }
+# memchr = { version = "2", optional = true }
 
 # Trojan
 # sha2 = { version = "0.9", optional = true }
@@ -214,7 +214,7 @@ memchr = { version = "2", optional = true }
 # uuid = { version = "1", optional = true }
 
 # Failover
-lru_time_cache = { version = "0.11", optional = true }
+# lru_time_cache = { version = "0.11", optional = true }
 
 # amux
 tokio-util = { version = "0.6", default-features = false, features = ["io"], optional = true }
@@ -224,7 +224,7 @@ tokio-util = { version = "0.6", default-features = false, features = ["io"], opt
 # rustls = { version = "0.20", optional = true }
 
 # API
-warp = { version = "0.3", default-features = false, optional = true }
+# warp = { version = "0.3", default-features = false, optional = true }
 
 # Auto reload
 notify = { version = "5.0.0-pre.13", optional = true }
