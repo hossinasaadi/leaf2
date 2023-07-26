@@ -17,8 +17,8 @@ default = [
 default-ring = [
     "all-configs",
     "all-endpoints",
-    "ring-aead",
-    "rustls-tls",
+    # "ring-aead",
+    # "rustls-tls",
     # quinn supports only rustls as tls backend for now
     # "inbound-quic",
     # "outbound-quic",
@@ -30,8 +30,8 @@ default-ring = [
 default-openssl = [
     "all-configs",
     "all-endpoints",
-    "openssl-aead",
-    "openssl-tls",
+    # "openssl-aead",
+    # "openssl-tls",
 ]
 
 # Grouping all features
@@ -73,12 +73,12 @@ all-endpoints = [
 ]
 
 # Ring-related
-ring-aead = ["ring"]
-rustls-tls = ["tokio-rustls", "webpki-roots", "rustls-pemfile"]
+# ring-aead = ["ring"]
+# rustls-tls = ["tokio-rustls", "webpki-roots", "rustls-pemfile"]
 
 # Openssl-related, for platforms not supported by ring, such as mips
-openssl-aead = ["openssl"]
-openssl-tls = ["openssl", "tokio-openssl", "openssl-probe"]
+# openssl-aead = ["openssl"]
+# openssl-tls = ["openssl", "tokio-openssl", "openssl-probe"]
 
 # Config formats
 config-conf = ["regex"]
@@ -151,10 +151,10 @@ serde = { version = "1.0", optional = true }
 regex = { version = "1", default-features = false, features = ["std", "perf"], optional = true }
 
 # Openssl
-openssl = { version = "0.10", features = ["vendored"], optional = true }
+# openssl = { version = "0.10", features = ["vendored"], optional = true }
 
 # Ring
-ring = { version = "0.16", optional = true }
+# ring = { version = "0.16", optional = true }
 
 # Router
 maxminddb = { version = "0.21", features = ["mmap"] }
@@ -172,20 +172,20 @@ chrono = "0.4"
 colored = "2.0"
 
 # TLS/rustls/QUIC
-tokio-rustls = { version = "0.23", features = ["dangerous_configuration"], optional = true }
-webpki-roots = { version = "0.22", optional = true }
-rustls-pemfile = { version = "1.0.2", optional = true }
+# tokio-rustls = { version = "0.23", features = ["dangerous_configuration"], optional = true }
+# webpki-roots = { version = "0.22", optional = true }
+# rustls-pemfile = { version = "1.0.2", optional = true }
 
 # TLS/openssl
-openssl-probe = { version = "0.1", optional = true }
-tokio-openssl = { version = "0.6", optional = true }
+# openssl-probe = { version = "0.1", optional = true }
+# tokio-openssl = { version = "0.6", optional = true }
 
 # WebSocket
-tungstenite = { version = "0.16", default-features = false, optional = true }
-tokio-tungstenite = { version = "0.16", optional = true }
+# tungstenite = { version = "0.16", default-features = false, optional = true }
+# tokio-tungstenite = { version = "0.16", optional = true }
 
 # WebSocket
-url = { version = "2.2", optional = true }
+# url = { version = "2.2", optional = true }
 http = { version = "0.2", optional = true }
 
 # SOCKS outbound
@@ -201,17 +201,17 @@ base64 = { version = "0.21", optional = true }
 memchr = { version = "2", optional = true }
 
 # Trojan
-sha2 = { version = "0.9", optional = true }
-hex = { version = "0.4", optional = true }
+# sha2 = { version = "0.9", optional = true }
+# hex = { version = "0.4", optional = true }
 
-# VMess
-lz_fnv = { version = "0.1", optional = true }
-cfb-mode = { version = "0.8", optional = true }
-hmac = { version = "0.12", optional = true }
-aes = { version = "0.8", optional = true }
-sha3 = { version = "0.10", optional = true }
-digest = { version = "0.10", optional = true }
-uuid = { version = "1", optional = true }
+# # VMess
+# lz_fnv = { version = "0.1", optional = true }
+# cfb-mode = { version = "0.8", optional = true }
+# hmac = { version = "0.12", optional = true }
+# aes = { version = "0.8", optional = true }
+# sha3 = { version = "0.10", optional = true }
+# digest = { version = "0.10", optional = true }
+# uuid = { version = "1", optional = true }
 
 # Failover
 lru_time_cache = { version = "0.11", optional = true }
@@ -220,8 +220,8 @@ lru_time_cache = { version = "0.11", optional = true }
 tokio-util = { version = "0.6", default-features = false, features = ["io"], optional = true }
 
 # QUIC
-quinn = { version = "0.8", default-features = false, features = ["tls-rustls"], optional = true }
-rustls = { version = "0.20", optional = true }
+# quinn = { version = "0.8", default-features = false, features = ["tls-rustls"], optional = true }
+# rustls = { version = "0.20", optional = true }
 
 # API
 warp = { version = "0.3", default-features = false, optional = true }
