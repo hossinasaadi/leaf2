@@ -20,8 +20,8 @@ default-ring = [
     "ring-aead",
     "rustls-tls",
     # quinn supports only rustls as tls backend for now
-    "inbound-quic",
-    "outbound-quic",
+    # "inbound-quic",
+    # "outbound-quic",
     "api",
     "stat",
     # "plugin",
@@ -41,17 +41,17 @@ all-configs = [
 ]
 all-endpoints = [
     # inbounds
-    "inbound-chain",
-    "inbound-amux",
+    # "inbound-chain",
+    # "inbound-amux",
     # "inbound-quic",
-    "inbound-ws",
-    "inbound-tls",
-    "inbound-trojan",
+    # "inbound-ws",
+    # "inbound-tls",
+    # "inbound-trojan",
     "inbound-http",
     "inbound-shadowsocks",
     "inbound-socks",
     "inbound-tun",
-    "inbound-cat",
+    # "inbound-cat",
     # outbounds
     "outbound-direct",
     "outbound-drop",
@@ -59,16 +59,16 @@ all-endpoints = [
     "outbound-shadowsocks",
     "outbound-obfs",
     "outbound-socks",
-    "outbound-trojan",
-    "outbound-tls",
-    "outbound-ws",
-    "outbound-amux",
-    "outbound-vmess",
+    # "outbound-trojan",
+    # "outbound-tls",
+    # "outbound-ws",
+    # "outbound-amux",
+    # "outbound-vmess",
     # "outbound-quic",
     "outbound-failover",
-    "outbound-static",
-    "outbound-tryall",
-    "outbound-chain",
+    # "outbound-static",
+    # "outbound-tryall",
+    # "outbound-chain",
     # "outbound-select",
 ]
 
@@ -91,29 +91,29 @@ outbound-redirect = []
 outbound-shadowsocks = ["hkdf", "sha-1", "md-5", "tokio-util"]
 outbound-obfs = ["base64", "memchr"]
 outbound-socks = ["async-socks5"]
-outbound-trojan = ["sha2", "hex"]
-outbound-tls = []
-outbound-ws = ["tungstenite", "tokio-tungstenite", "url", "http"]
+# outbound-trojan = ["sha2", "hex"]
+# outbound-tls = []
+# outbound-ws = ["tungstenite", "tokio-tungstenite", "url", "http"]
 outbound-failover = ["lru_time_cache"]
-outbound-static= []
-outbound-tryall = []
-outbound-chain = []
-outbound-amux= ["tokio-util"]
-outbound-quic = ["quinn", "rustls", "webpki-roots"]
+# outbound-static= []
+# outbound-tryall = []
+# outbound-chain = []
+# outbound-amux= ["tokio-util"]
+# outbound-quic = ["quinn", "rustls", "webpki-roots"]
 outbound-select = []
-outbound-vmess = ["lz_fnv", "cfb-mode", "hmac", "aes", "sha3", "digest", "uuid", "md-5", "tokio-util"]
+# outbound-vmess = ["lz_fnv", "cfb-mode", "hmac", "aes", "sha3", "digest", "uuid", "md-5", "tokio-util"]
 
 # Inbounds
-inbound-trojan = ["sha2", "hex"]
+# inbound-trojan = ["sha2", "hex"]
 inbound-shadowsocks = ["hkdf", "sha-1", "md-5", "tokio-util"]
 inbound-socks = []
 inbound-http = ["http"]
 inbound-tun = ["tun", "netstack-lwip"]
-inbound-ws = ["tungstenite", "tokio-tungstenite", "url", "http"]
-inbound-amux = ["tokio-util"]
-inbound-quic = ["quinn", "rustls", "webpki-roots"]
-inbound-tls = []
-inbound-chain = []
+# inbound-ws = ["tungstenite", "tokio-tungstenite", "url", "http"]
+# inbound-amux = ["tokio-util"]
+# inbound-quic = ["quinn", "rustls", "webpki-roots"]
+# inbound-tls = []
+# inbound-chain = []
 inbound-cat = ["tokio/io-std"]
 
 plugin = []
