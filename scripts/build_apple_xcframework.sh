@@ -17,44 +17,27 @@ if [ "$1" = "debug" ]; then
 	release_flag=
 fi
 
-echo "x86_64-apple-ios-macabi and aarch64-apple-ios-macabi require the nightly toolchain"
-rustup toolchain install nightly
-rustup default nightly
-
-# to allow for abi builds from the nightly toolchain for xargo...
-rustup component add rust-src
-
-# echo "▸ Install xargo"
-# cargo install xargo
-
 # Build for all desired targets
+rustup target add x86_64-apple-darwin
+rustup target add aarch64-apple-darwin
 rustup target add aarch64-apple-ios
-rustup target add aarch64-apple-ios-macabi
-rustup target add x86_64-apple-ios-macabi
-
+cargo build -p $package $release_flag --no-default-features --features "default-openssl" --target x86_64-apple-darwin
+cargo build -p $package $release_flag --no-default-features --features "default-openssl" --target aarch64-apple-darwin
 cargo build -p $package $release_flag --no-default-features --features "default-openssl" --target aarch64-apple-ios
-
-echo "▸ x86_64-apple-ios-macabi"
-cargo build -p $package $release_flag --no-default-features --target x86_64-apple-ios-macabi
-
-echo "▸ aarch64-apple-ios-macabi"
-#xargo build --target aarch64-apple-ios-macabi --package automerge-c --release
-cargo build -p $package $release_flag --no-default-features --target aarch64-apple-ios-macabi
 
 # Directories to put the libraries.
 rm -rf target/apple/$mode
 mkdir -p target/apple/$mode/include
 mkdir -p target/apple/$mode/ios
-mkdir -p target/apple/$mode/macCatalyst
+mkdir -p target/apple/$mode/macos
 
 # Put built libraries to folders where we can find them easier later
 cp target/aarch64-apple-ios/$mode/$lib target/apple/$mode/ios/
-# Create a single library for multiple archs	
-lipo -create  \
-    -arch arm64 target/aarch64-apple-ios-macabi/$mode/$lib \
-    -arch x86_64 target/x86_64-apple-ios-macabi/$mode/$lib \
-    -output target/apple/$mode/macCatalyst/$lib
-
+# Create a single library for multiple archs
+lipo -create \
+	-arch x86_64 target/x86_64-apple-darwin/$mode/$lib \
+	-arch arm64 target/aarch64-apple-darwin/$mode/$lib \
+	-output target/apple/$mode/macos/$lib
 # Generate the header file
 cbindgen \
 	--config $package/cbindgen.toml \
@@ -78,7 +61,7 @@ EOF
 xcodebuild -create-xcframework \
 	-library "$wd/ios/$lib" \
 	-headers "$wd/include" \
-	-library "$wd/macCatalyst/$lib" \
+	-library "$wd/macos/$lib" \
 	-headers "$wd/include" \
 	-output "$wd/$name.xcframework"
 
