@@ -30,8 +30,8 @@ default-ring = [
 default-openssl = [
     "all-configs",
     "all-endpoints",
-    # "openssl-aead",
-    # "openssl-tls",
+    "openssl-aead",
+    "openssl-tls",
 ]
 
 # Grouping all features
@@ -77,8 +77,8 @@ all-endpoints = [
 # rustls-tls = ["tokio-rustls", "webpki-roots", "rustls-pemfile"]
 
 # Openssl-related, for platforms not supported by ring, such as mips
-# openssl-aead = ["openssl"]
-# openssl-tls = ["openssl", "tokio-openssl", "openssl-probe"]
+openssl-aead = ["openssl"]
+openssl-tls = ["openssl", "tokio-openssl", "openssl-probe"]
 
 # Config formats
 config-conf = ["regex"]
@@ -151,7 +151,7 @@ serde = { version = "1.0", optional = true }
 regex = { version = "1", default-features = false, features = ["std", "perf"], optional = true }
 
 # Openssl
-# openssl = { version = "0.10", features = ["vendored"], optional = true }
+openssl = { version = "0.10", features = ["vendored"], optional = true }
 
 # Ring
 # ring = { version = "0.16", optional = true }
@@ -177,8 +177,8 @@ colored = "2.0"
 # rustls-pemfile = { version = "1.0.2", optional = true }
 
 # TLS/openssl
-# openssl-probe = { version = "0.1", optional = true }
-# tokio-openssl = { version = "0.6", optional = true }
+openssl-probe = { version = "0.1", optional = true }
+tokio-openssl = { version = "0.6", optional = true }
 
 # WebSocket
 # tungstenite = { version = "0.16", default-features = false, optional = true }
