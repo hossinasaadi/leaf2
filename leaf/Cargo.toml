@@ -17,7 +17,7 @@ default = [
 default-ring = [
     "all-configs",
     "all-endpoints",
-    # "ring-aead",
+    "ring-aead",
     # "rustls-tls",
     # quinn supports only rustls as tls backend for now
     # "inbound-quic",
@@ -73,7 +73,7 @@ all-endpoints = [
 ]
 
 # Ring-related
-# ring-aead = ["ring"]
+ring-aead = ["ring"]
 # rustls-tls = ["tokio-rustls", "webpki-roots", "rustls-pemfile"]
 
 # Openssl-related, for platforms not supported by ring, such as mips
@@ -154,7 +154,7 @@ regex = { version = "1", default-features = false, features = ["std", "perf"], o
 openssl = { version = "0.10", features = ["vendored"], optional = true }
 
 # Ring
-# ring = { version = "0.16", optional = true }
+ring = { version = "0.16", optional = true }
 
 # Router
 maxminddb = { version = "0.21", features = ["mmap"] }
