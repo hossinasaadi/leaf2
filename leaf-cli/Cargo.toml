@@ -10,9 +10,7 @@ path = "src/main.rs"
 
 [features]
 default = [
-  "leaf/default-ring",
-  "leaf/outbound-quic",
-  "leaf/outbound-quic",
+  "leaf/minimal-ring",
   "leaf/ctrlc",
   "leaf/auto-reload",
 ]
