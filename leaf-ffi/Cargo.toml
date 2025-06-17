@@ -15,7 +15,7 @@ default = [
 ]
 
 default-aws-lc= [
-    "leaf/default-aws-lc",
+    "leaf/minimal-ring",
 ]
 
 default-ring = [
@@ -27,7 +27,6 @@ default-openssl = [
 ]
 
 outbound-quic = [
-    "leaf/outbound-quic",
 ]
 
 auto-reload = ["leaf/auto-reload"]
