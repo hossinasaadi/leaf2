@@ -19,7 +19,7 @@ default-aws-lc= [
 ]
 
 default-ring = [
-    "leaf/default-ring",
+    "leaf/minimal-ring",
 ]
 
 default-openssl = [
