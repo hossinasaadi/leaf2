@@ -6,63 +6,6 @@ on:
       - v*
 
 jobs:
-  build-cli-cross:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        target:
-          - x86_64-unknown-linux-musl
-          - aarch64-unknown-linux-musl
-          - x86_64-pc-windows-gnu
-    steps:
-      - name: checkout
-        uses: actions/checkout@v4
-        with:
-          submodules: true
-
-      - name: install rust toolchain
-        uses: hecrj/setup-rust-action@v1
-        with:
-          rust-version: stable
-
-      - name: install deps
-        run: |
-          sudo apt update && sudo apt install llvm-dev libclang-dev clang libssl-dev pkg-config protobuf-compiler make -y
-
-      - name: install cross
-        run: |
-          cargo install cross
-
-      - name: build
-        run: |
-          export CFG_COMMIT_HASH=`git log --pretty=format:'%h' -n 1`
-          export CFG_COMMIT_DATE=`git log --format="%ci" -n 1`
-          cross build --release --target ${{ matrix.target }}
-
-      - name: rename and compress artifacts
-        if: ${{ matrix.target == 'x86_64-pc-windows-gnu' }}
-        run: |
-          mv target/${{ matrix.target }}/release/leaf.exe leaf-${{ matrix.target }}.exe
-
-      - name: rename and compress artifacts
-        if: ${{ matrix.target != 'x86_64-pc-windows-gnu' }}
-        run: |
-          mv target/${{ matrix.target }}/release/leaf leaf-${{ matrix.target }}
-
-      - name: upload assets
-        if: ${{ matrix.target == 'x86_64-pc-windows-gnu' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: leaf-${{ matrix.target }}.exe
-          path: leaf-${{ matrix.target }}.exe
-
-      - name: upload assets
-        if: ${{ matrix.target != 'x86_64-pc-windows-gnu' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: leaf-${{ matrix.target }}
-          path: leaf-${{ matrix.target }}
-
   build-cli-macos:
     runs-on: [macos-latest]
     strategy:
@@ -140,53 +83,8 @@ jobs:
           name: leaf.xcframework.zip
           path: leaf.xcframework.zip
 
-  build-lib-android:
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v4
-        with:
-          submodules: true
-
-      - name: install rust
-        uses: hecrj/setup-rust-action@v1
-        with:
-          rust-version: stable
-
-      - name: install toolchain
-        run: |
-          cargo install cbindgen
-          apt update && apt install -y make llvm-dev libclang-dev clang pkg-config unzip curl default-jdk build-essential
-          export ANDROID_HOME=/tmp/Android/sdk
-          export NDK_HOME=/tmp/Android/sdk/ndk/25.2.9519653
-          export PATH=$ANDROID_HOME/cmdline-tools/bin:$PATH
-          cd /tmp/
-          curl -OL https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip
-          unzip commandlinetools-linux-6858069_latest.zip
-          mkdir -p $ANDROID_HOME
-          mv cmdline-tools $ANDROID_HOME
-          yes | sdkmanager --sdk_root=$ANDROID_HOME --licenses
-          sdkmanager --sdk_root=$ANDROID_HOME "ndk;25.2.9519653" "platforms;android-21"
-
-      - name: build
-        run: |
-          export ANDROID_HOME=/tmp/Android/sdk
-          export NDK_HOME=/tmp/Android/sdk/ndk/25.2.9519653
-          ./scripts/build_android.sh
-
-      - name: zip artifacts
-        run: |
-          mv target/leaf-android-libs .
-          zip -r leaf-android-libs.zip leaf-android-libs
-
-      - name: upload assets
-        uses: actions/upload-artifact@v4
-        with:
-          name: leaf-android-libs.zip
-          path: leaf-android-libs.zip
-
   create-release:
-    needs: [build-cli-cross, build-cli-macos, build-lib-apple, build-lib-android]
+    needs: [build-cli-macos, build-lib-apple]
     runs-on: macos-latest
     steps:
       - name: checkout
@@ -223,9 +121,6 @@ jobs:
         target:
           - x86_64-apple-darwin
           - aarch64-apple-darwin
-          - x86_64-unknown-linux-musl
-          - aarch64-unknown-linux-musl
-          - x86_64-pc-windows-gnu
     steps:
       - name: download upload url
         uses: actions/download-artifact@v4
@@ -237,49 +132,7 @@ jobs:
           upload_url=`cat upload_url.txt`
           echo "uploadurl=$upload_url" >> $GITHUB_ENV
 
-      - name: download asset
-        if: ${{ matrix.target != 'x86_64-pc-windows-gnu' }}
-        uses: actions/download-artifact@v4
-        with:
-          name: leaf-${{ matrix.target }}
 
-      - name: download asset
-        if: ${{ matrix.target == 'x86_64-pc-windows-gnu' }}
-        uses: actions/download-artifact@v4
-        with:
-          name: leaf-${{ matrix.target }}.exe
-
-      - name: zip artifacts
-        if: ${{ matrix.target != 'x86_64-pc-windows-gnu' }}
-        run: |
-          gzip leaf-${{ matrix.target }}
-
-      - name: zip artifacts
-        if: ${{ matrix.target == 'x86_64-pc-windows-gnu' }}
-        run: |
-          zip -9 leaf-${{ matrix.target }}.zip leaf-${{ matrix.target }}.exe
-
-      - name: upload asset
-        if: ${{ matrix.target != 'x86_64-pc-windows-gnu' }}
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ env.uploadurl }}
-          asset_path: ./leaf-${{ matrix.target }}.gz
-          asset_name: leaf-${{ matrix.target }}.gz
-          asset_content_type: application/octet-stream
-
-      - name: upload asset
-        if: ${{ matrix.target == 'x86_64-pc-windows-gnu' }}
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ env.uploadurl }}
-          asset_path: ./leaf-${{ matrix.target }}.zip
-          asset_name: leaf-${{ matrix.target }}.zip
-          asset_content_type: application/octet-stream
 
   release-mobile-libs:
     needs: [create-release]
@@ -300,11 +153,6 @@ jobs:
         with:
           name: leaf.xcframework.zip
 
-      - name: download asset
-        uses: actions/download-artifact@v4
-        with:
-          name: leaf-android-libs.zip
-
       - name: upload asset
         uses: actions/upload-release-asset@v1
         env:
@@ -313,14 +161,4 @@ jobs:
           upload_url: ${{ env.uploadurl }}
           asset_path: ./leaf.xcframework.zip
           asset_name: leaf.xcframework.zip
-          asset_content_type: application/octet-stream
-
-      - name: upload asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ env.uploadurl }}
-          asset_path: ./leaf-android-libs.zip
-          asset_name: leaf-android-libs.zip
           asset_content_type: application/octet-stream
