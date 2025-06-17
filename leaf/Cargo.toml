@@ -13,6 +13,22 @@ path = "src/lib.rs"
 default = [
     "default-ring"
 ]
+minimal-ring = [
+    "all-configs",
+
+    "inbound-http",
+    "inbound-shadowsocks",
+    "inbound-socks",
+    "inbound-tun",
+    "outbound-redirect",
+    "outbound-failover",
+
+
+    
+    "ring-aead",
+
+    "api",
+]
 
 default-ring = [
     "all-configs",
