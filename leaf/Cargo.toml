@@ -20,6 +20,7 @@ minimal-ring = [
     "inbound-shadowsocks",
     "inbound-socks",
     "inbound-tun",
+    "inbound-tls",
     "outbound-redirect",
     "outbound-failover",
 
