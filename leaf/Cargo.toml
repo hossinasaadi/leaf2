@@ -24,9 +24,9 @@ minimal-ring = [
 
 
     
-    "ring-aead",
+    # "ring-aead",
 
-    "api",
+    # "api",
 ]
 
 default-ring = [
@@ -62,7 +62,7 @@ rustls-tls-ring = ["tokio-rustls/ring"]
 # Grouping all features
 all-configs = [
     "config-conf",
-    "config-json",
+    # "config-json",
 ]
 all-endpoints = [
     # inbounds
