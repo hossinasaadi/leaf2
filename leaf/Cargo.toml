@@ -20,8 +20,10 @@ minimal-ring = [
     # "inbound-shadowsocks",
     "inbound-socks",
     "inbound-tun",
-    "outbound-redirect",
 
+    "outbound-socks",
+    "outbound-redirect",
+    "outbound-direct",
 
     
     # "ring-aead",
