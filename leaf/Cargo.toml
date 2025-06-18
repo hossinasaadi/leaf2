@@ -17,7 +17,7 @@ minimal-ring = [
     "all-configs",
 
     "inbound-http",
-    "inbound-shadowsocks",
+    # "inbound-shadowsocks",
     "inbound-socks",
     "inbound-tun",
     "outbound-redirect",
