@@ -12,7 +12,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           submodules: true
 
@@ -34,7 +34,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           submodules: true
 
@@ -63,7 +63,7 @@ jobs:
           mv target/${{ matrix.target }}/release/leaf leaf-${{ matrix.target }}
 
       - name: upload assets
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: leaf-${{ matrix.target }}
           path: leaf-${{ matrix.target }}
@@ -72,7 +72,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           submodules: true
 
@@ -96,7 +96,7 @@ jobs:
           zip -r leaf.xcframework.zip leaf.xcframework
 
       - name: upload assets
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: leaf.xcframework.zip
           path: leaf.xcframework.zip
