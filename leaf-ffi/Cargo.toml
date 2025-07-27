@@ -15,7 +15,10 @@ default = [
 ]
 
 default-ring = [
-    "leaf/default-ring",
+    "leaf/minimal-ring",
+]
+default-aws-lc= [
+    "leaf/minimal-ring",
 ]
 
 default-openssl = [
