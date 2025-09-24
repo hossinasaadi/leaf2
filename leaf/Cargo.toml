@@ -25,16 +25,14 @@ minimal-ring = [
     "outbound-socks",
     "outbound-redirect",
     "outbound-direct",
-
-    "outbound-failover",
-    "outbound-static",
-    "outbound-tryall",
-    "outbound-chain",
+    "outbound-shadowsocks",
+    "outbound-obfs",
 
     
     "ring-aead",
 
     "api",
+    "stat",
 ]
 
 default-ring = [
