@@ -14,10 +14,6 @@ default = [
     "default-ring",
 ]
 
-default-aws-lc= [
-    "leaf/default-aws-lc",
-]
-
 default-ring = [
     "leaf/minimal-ring",
 ]
