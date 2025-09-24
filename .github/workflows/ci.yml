@@ -25,6 +25,8 @@ jobs:
         run: cargo test -p leaf
 
   build-bin-local:
+    runs-on: [macos-latest]
+
     strategy:
       fail-fast: false
       matrix:
