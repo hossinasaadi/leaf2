@@ -25,7 +25,7 @@ jobs:
         run: cargo test -p leaf
 
   build-bin-local:
-    runs-on: [macos-latest]
+    runs-on: [self-hosted]
 
     strategy:
       fail-fast: false
@@ -74,7 +74,7 @@ jobs:
           path: leaf-${{ matrix.target }}
 
   build-lib-apple:
-    runs-on: macos-latest
+    runs-on: self-hosted
     steps:
       - name: checkout
         uses: actions/checkout@v4
