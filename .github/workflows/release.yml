@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-bin-local:
-    runs-on: [macos-latest]
+    runs-on: [self-hosted]
     strategy:
       fail-fast: false
       matrix:
@@ -51,7 +51,7 @@ jobs:
           path: leaf-${{ matrix.target }}
 
   build-lib-apple:
-    runs-on: macos-latest
+    runs-on: self-hosted
     steps:
       - name: checkout
         uses: actions/checkout@v4
@@ -85,7 +85,7 @@ jobs:
 
   create-release:
     needs: [build-bin-local, build-lib-apple]
-    runs-on: macos-latest
+    runs-on: self-hosted
     steps:
       - name: checkout
         uses: actions/checkout@v4
@@ -115,7 +115,7 @@ jobs:
 
   release-mobile-libs:
     needs: [create-release]
-    runs-on: macos-latest
+    runs-on: self-hosted
     steps:
       - name: download upload url
         uses: actions/download-artifact@v4
